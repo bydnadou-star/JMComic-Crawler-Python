@@ -77,7 +77,7 @@ class DirRule:
                               album: JmAlbumDetail,
                               photo: JmPhotoDetail,
                               ) -> str:
-        return self.apply_rule_to_path(album, photo)
+        return self.decide_album_root_dir(album)
 
     def decide_album_root_dir(self, album: JmAlbumDetail) -> str:
         return self.apply_rule_to_path(album, None, True)
