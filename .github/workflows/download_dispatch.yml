@@ -129,9 +129,8 @@ jobs:
           pip install img2pdf
 
       - name: 安装jmcomic（pip）
-        if: ${{ github.ref != 'refs/heads/dev' }}
         run: |
-          pip install jmcomic -i https://pypi.org/project --upgrade
+          pip install -e ./
 
       - name: 安装jmcomic（local）
         if: ${{ github.ref == 'refs/heads/dev' }}
