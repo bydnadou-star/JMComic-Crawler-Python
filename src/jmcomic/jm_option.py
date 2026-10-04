@@ -77,7 +77,12 @@ class DirRule:
                               album: JmAlbumDetail,
                               photo: JmPhotoDetail,
                               ) -> str:
-        return self.decide_album_root_dir(album)
+        # 第1章不创建“1”文件夹
+        if photo.album_index == 1:
+            return self.apply_rule_to_path(album, photo, True)
+            
+        # 第2章及以后保持原来的目录规则
+        return self.apply_rule_to_path(album, photo)
 
     def decide_album_root_dir(self, album: JmAlbumDetail) -> str:
         return self.apply_rule_to_path(album, None, True)
