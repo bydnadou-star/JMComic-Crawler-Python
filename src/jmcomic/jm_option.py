@@ -259,11 +259,16 @@ class JmOption:
         return self.download.image.suffix or image.img_file_suffix
 
     def decide_image_save_dir(self, photo: JmPhotoDetail, ensure_exists=True) -> str:
-        # 使用 self.dir_rule 决定 save_dir
-        save_dir = self.dir_rule.decide_image_save_dir(
-            photo.from_album,
-            photo
-        )
+        # 第1章直接保存到本子根目录，不创建“1”文件夹
+        if photo.album_index == 1:
+            save_dir = self.dir_rule.decide_album_root_dir(photo.from_album)
+        else:
+            # 第2章及以后按照原来的 Pindex 规则保存
+            save_dir = self.dir_rule.apply_rule_to_path(
+                photo.from_album,
+                photo,
+                False
+            )
 
         if ensure_exists:
             save_dir = JmcomicText.try_mkdir(save_dir)
